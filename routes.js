@@ -32,4 +32,16 @@ exports = module.exports = function(app){
 
     // now the scary method :(  delete
     app.delete('/communication/:commId',require('./api/communications').delete) ;
+
+    // Communications
+    app.get('/contact/',require('./api/contacts').list) ;
+    // user with id
+    app.get('/contact/:commId',require('./api/contacts').get) ;
+    // add a new user
+    app.post('/contact',require('./api/contacts').post) ;
+
+    app.put('/contact',require('./api/contacts').post) ;
+
+    // now the scary method :(  delete
+    app.delete('/contact/:contactId',require('./api/contacts').delete) ;
 }

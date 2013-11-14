@@ -102,6 +102,48 @@ myapp.service('sComm',function($http,$q){
 
 });
 
+myapp.service('sContact',function($http,$q){
+
+    this.getContacts = function(){
+        var defered = $q.defer() ;
+
+        $http({method:'GET', url: '/contact'}).success(function(data,status){
+            deferred.resolve(data);
+            return data ;
+        });
+        return defered.promise ;
+    }
+    this.getContact = function(ContactId){
+        var defered = $q.defer() ;
+
+        $http({method:'GET', url: '/contact/'+ ContactId}).success(function(data,status){
+            deferred.resolve(data);
+            return data ;
+        });
+        return defered.promise ;
+    }
+
+    this.postContact = function(Contact){
+        var defered = $q.defer() ;
+
+        $http({method:'POST', url: '/contact/', data:Contact}).success(function(data,status){
+            defered.resolve(data);
+            return data ;
+        });
+        return defered.promise ;
+    }
+
+    this.deleteContact = function(ContactId){
+        var defered = $q.defer();
+        $http({method:'DELETE',url:'/contact/' + ContactId}).success(function(data,status){
+            defered.resolve(data);
+            return data ;
+        });
+        return defered.promise ;
+    }
+
+});
+
 function userCtrl($scope,sUser){
 
     $scope.user ={} ;
@@ -139,5 +181,10 @@ function userCtrl($scope,sUser){
         });
 
     }
+
+}
+
+function contactCtrl($scope) {
+
 
 }
