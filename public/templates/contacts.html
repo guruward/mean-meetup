@@ -1,0 +1,26 @@
+<div class="content">
+    <div class="container">
+        <div>
+            <span ng-repeat="contact in contacts">
+                <form role="form">
+                    <div class="form-group">
+                        <input id="firstName" ng-model="contact.firstName" placeholder="First Name" />
+                        <input id="lastName" ng-model="contact.lastName" placeholder="Last Name"   />
+                 <span ng-repeat="phone in contact.phones" >
+                     <input id="phnType" ng-model="phone.phnType" placeholder="cell, home, office">
+                     <input id="number" ng-model="phone.number" placeholder="(xxx)xxx-xxxx" />
+                 </span>
+                <span ng-repeat="email in contact.emails" >
+                     <input id="email" ng-model="email.email" placeholder="con@mobi.net">
+
+                 </span>
+                        <input id="company" ng-model="contact.company" placeholder="Works for" />
+                        <textarea id="description" ng-model="contact.description" placeholder="notes" ></textarea>
+                    </div>
+                </form>
+
+            </span>
+            <button class="btn btn-warning" ng-click="contacts.push({})">Add Contact</button>
+        </div>
+    </div>
+</div>

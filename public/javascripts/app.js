@@ -7,7 +7,7 @@ myapp = angular.module('MEAN',[]).
         $routeProvider.
             when('/', {templateUrl: 'partials/home.html',   controller: userCtrl}).
             when('/user/', {templateUrl: 'partials/user.html', controller: userCtrl}).
-
+            when('/contacts/', {templateUrl: 'partials/contacts.html', controller: contactCtrl}).
             otherwise({redirectTo: '/'});
     }]);
 
@@ -184,7 +184,15 @@ function userCtrl($scope,sUser){
 
 }
 
-function contactCtrl($scope) {
+function contactCtrl($scope, sContact) {
 
+    // load contacts into scope
+
+    var promise = sContact.getContacts() ;
+    promise.then(function(response){
+        $scope.contacts = response ;
+    })  ;
+
+     if(!$scope.contacts)$scope.contacts = [{firstName:'the',lastName:'dude'}] ;
 
 }
