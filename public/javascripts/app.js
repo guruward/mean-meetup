@@ -107,7 +107,7 @@ myapp.service('sContact',function($http,$q){
     this.getContacts = function(){
         var defered = $q.defer() ;
 
-        $http({method:'GET', url: '/contact'}).success(function(data,status){
+        $http({method:'GET', url: '/contact/'}).success(function(data,status){
             deferred.resolve(data);
             return data ;
         });
@@ -188,11 +188,13 @@ function contactCtrl($scope, sContact) {
 
     // load contacts into scope
 
+    $scope.newContact = {phones:[],emails:[]} ;
+
     var promise = sContact.getContacts() ;
     promise.then(function(response){
         $scope.contacts = response ;
     })  ;
 
-     if(!$scope.contacts)$scope.contacts = [{firstName:'the',lastName:'dude'}] ;
+     if(!$scope.contacts)$scope.contacts = [{firstName:'the',lastName:'dude',phones:[],emails:[]}] ;
 
 }
