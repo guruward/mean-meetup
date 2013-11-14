@@ -6,7 +6,7 @@ myapp = angular.module('MEAN',[]).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.
             when('/', {templateUrl: 'partials/home.html',   controller: userCtrl}).
-            when('/user/', {templateUrl: 'partials/demo.html', controller: userCtrl}).
+            when('/user/', {templateUrl: 'partials/user.html', controller: userCtrl}).
 
             otherwise({redirectTo: '/'});
     }]);

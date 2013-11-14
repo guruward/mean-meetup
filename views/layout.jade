@@ -12,3 +12,22 @@ html(ng-app="MEAN")
     script(src='javascripts/directives.js')
   body
     block content
+    .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+       .container
+          .navbar-header
+              button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+                  span.sr-only Toggle navigation
+                  span.icon-bar
+                  span.icon-bar
+                  span.icon-bar
+              a.navbar-brand(href='#') MEAN Stack
+          .collapse.navbar-collapse
+              ul.nav.navbar-nav
+                  li
+                      a(href='#') Home
+                  li
+                      a(href='/#user') myAccount
+                  li
+                      a(href='#contact') Contacts
+          //
+            /.nav-collapse
