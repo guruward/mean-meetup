@@ -33,7 +33,7 @@ exports.get = function(req, res){
             res.json(data) ;
         });
     }
-    catch(e){
+          catch(e){
         console.log(e);
         res.send(e) ;
     }
