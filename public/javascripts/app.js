@@ -7,7 +7,7 @@ myapp = angular.module('MEAN',[]).
         $routeProvider.
             when('/', {templateUrl: 'partials/home.html',   controller: userCtrl}).
             when('/user/', {templateUrl: 'partials/user.html', controller: userCtrl}).
-
+            when('/contacts/', {templateUrl: 'partials/contacts.html', controller: contactCtrl}).
             otherwise({redirectTo: '/'});
     }]);
 
@@ -102,6 +102,48 @@ myapp.service('sComm',function($http,$q){
 
 });
 
+myapp.service('sContact',function($http,$q){
+
+    this.getContacts = function(){
+        var defered = $q.defer() ;
+
+        $http({method:'GET', url: '/contact/'}).success(function(data,status){
+            deferred.resolve(data);
+            return data ;
+        });
+        return defered.promise ;
+    }
+    this.getContact = function(ContactId){
+        var defered = $q.defer() ;
+
+        $http({method:'GET', url: '/contact/'+ ContactId}).success(function(data,status){
+            deferred.resolve(data);
+            return data ;
+        });
+        return defered.promise ;
+    }
+
+    this.postContact = function(Contact){
+        var defered = $q.defer() ;
+
+        $http({method:'POST', url: '/contact/', data:Contact}).success(function(data,status){
+            defered.resolve(data);
+            return data ;
+        });
+        return defered.promise ;
+    }
+
+    this.deleteContact = function(ContactId){
+        var defered = $q.defer();
+        $http({method:'DELETE',url:'/contact/' + ContactId}).success(function(data,status){
+            defered.resolve(data);
+            return data ;
+        });
+        return defered.promise ;
+    }
+
+});
+
 function userCtrl($scope,sUser){
 
     $scope.user ={} ;
@@ -139,5 +181,20 @@ function userCtrl($scope,sUser){
         });
 
     }
+
+}
+
+function contactCtrl($scope, sContact) {
+
+    // load contacts into scope
+
+    $scope.newContact = {phones:[],emails:[]} ;
+
+    var promise = sContact.getContacts() ;
+    promise.then(function(response){
+        $scope.contacts = response ;
+    })  ;
+
+     if(!$scope.contacts)$scope.contacts = [{firstName:'the',lastName:'dude',phones:[],emails:[]}] ;
 
 }

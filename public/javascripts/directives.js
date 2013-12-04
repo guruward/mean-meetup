@@ -10,3 +10,12 @@ myapp.directive('user',function(){
     }
 
 })
+
+myapp.directive('contacts',function(){
+    return {
+        restrict:"E" ,
+        templateUrl:"/templates/contacts.html",
+        controller: 'contactCtrl'
+    }
+
+})
