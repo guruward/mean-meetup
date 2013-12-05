@@ -1,11 +1,10 @@
-
 /**
  * Module dependencies.
  */
 
 var express = require('express');
 // var routes = require('./routes'); this is the default express writes, Im changing it up a bit
-// var user = require('./api/user');
+
 var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose') ;

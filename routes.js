@@ -10,7 +10,7 @@ exports = module.exports = function(app){
     app.get('/', api.index );
 
     // rest users
-    app.get('/users/',require('./api/users').list) ;
+    app.get('/users',require('./api/users').list) ;
     // user with id
     app.get('/users/:userId',require('./api/users').get) ;
     // add a new user
