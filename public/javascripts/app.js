@@ -17,8 +17,8 @@ myapp.service('sUser',function($http,$q){
         var defered = $q.defer() ;
 
         $http({method:'GET', url: '/users'}).success(function(data,status){
-            deferred.resolve(data);
-            return data ;
+            defered.resolve(data);
+           // return data ;
         });
         return defered.promise ;
     }
@@ -27,7 +27,7 @@ myapp.service('sUser',function($http,$q){
 
         $http({method:'GET', url: '/users/'+ userId}).success(function(data,status){
             deferred.resolve(data);
-            return data ;
+        //    return data ;
         });
         return defered.promise ;
     }
@@ -66,7 +66,7 @@ myapp.service('sComm',function($http,$q){
         var defered = $q.defer() ;
 
         $http({method:'GET', url: '/communication'}).success(function(data,status){
-            deferred.resolve(data);
+            defered.resolve(data);
             return data ;
         });
         return defered.promise ;
@@ -108,7 +108,7 @@ myapp.service('sContact',function($http,$q){
         var defered = $q.defer() ;
 
         $http({method:'GET', url: '/contact/'}).success(function(data,status){
-            deferred.resolve(data);
+            defered.resolve(data);
             return data ;
         });
         return defered.promise ;
@@ -148,10 +148,7 @@ function userCtrl($scope,sUser){
 
     $scope.user ={} ;
 
-    $scope.user.firstName = 'Stephen' ;
-    $scope.user.lastName = 'Ward' ;
-    $scope.user.userName = 'the_dude' ;
-    $scope.user.avatar = {} ;
+
 
     $scope.save = function(form){
         var promise ;

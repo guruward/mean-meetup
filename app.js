@@ -1,9 +1,9 @@
+
 /**
  * Module dependencies.
  */
 
 var express = require('express');
-// var routes = require('./routes'); this is the default express writes, Im changing it up a bit
 
 var http = require('http');
 var path = require('path');
@@ -39,9 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-//  I'm commenting out the routing here, because I want to isolate it in it own file.
-// app.get('/', routes.index);
-// app.get('/users', user.list);
+
 
 require('./routes')(app,mongoose) ; // this will be my file containing all the route definitions
 
