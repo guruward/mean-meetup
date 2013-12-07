@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>MEAN Stack - Don't Worry I'm really Javascript friendly</title>
+
+	<meta name="description" content="This is a an express scaffold. This repository is for education purposes and it used to demonstrate creating a MEAN application">
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+</head>
+<body ng-app="MEAN">
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please
+	<a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+
+<div ng-include="'/partials/header.html'"></div>
+
+<div ng-view=""></div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular-route.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+<script src="/javascripts/app.js"></script>
+<script src="/javascripts/directives.js"></script>
+<script src="/javascripts/services.js"></script>
+
+</body>
+</html>

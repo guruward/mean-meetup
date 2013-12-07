@@ -1,88 +1,79 @@
+exports.list = function (req, res) {
+	var user = req.app.db.model('user');
 
-/*
- * GET users listing.
- */
-
-exports.list = function(req, res){
-
-  var user = req.app.db.model('user') ;
-
-  var query = user.find() ;
-  query.sort({lastName:'asc'}) ;
-  query.exec(function(err,data){
-      if(err){
-          console.log(err);
-          res.send(500) ;
-      }
-      res.json(data) ;
-  })
-
-
+	var query = user.find();
+	query.sort({lastName: 'asc'});
+	query.exec(function (err, data) {
+		if (err) {
+			console.log(err);
+			res.send(500);
+		}
+		res.json(data);
+	})
 };
 
 
-exports.get = function(req, res){
+exports.get = function (req, res) {
+	var user = req.app.db.model('user');
 
-    var user = req.app.db.model('user') ;
-
-
-    try{
-        var id = req.params['userId'] ;
-        user.findOne({_id: id}, function(err,data){
-            console.log('find by id') ;
-            res.json(data) ;
-        });
-    }
-          catch(e){
-        console.log(e);
-        res.send(e) ;
-    }
+	try {
+		var id = req.params['userId'];
+		user.findOne({_id: id}, function (err, data) {
+			console.log('find by id');
+			res.json(data);
+		});
+	}
+	catch (e) {
+		console.log(e);
+		res.send(e);
+	}
 
 
 };
 
 // manages both post and put
 
-exports.post = function(req,res){
-    var user =  req.app.db.model('user');
-    // console.log(req.body) ;
-    var newuser = new user(req.body);
-    newuser.validate(function(error) {
-        if (error) {
-            res.json({ error : error });
-        } else {
+exports.post = function (req, res) {
+	var user = req.app.db.model('user');
 
-          newuser.save(function(err,data){
+	var newuser = new user(req.body);
+	newuser.validate(function (error) {
+		if (error) {
+			res.json({ error: error });
+		} else {
 
-              res.send(data) ;
-          })
-        }
-    });
-}   ;
+			newuser.save(function (err, data) {
 
-exports.put = function(req,res){
-    var user =  req.app.db.model('user');
-    // console.log(req.body) ;
-    var newuser = new user(req.body);
-    newuser.validate(function(error) {
-        if (error) {
-            res.json({ error : error });
-        } else {
-                delete req.body._id ;
-                user.findByIdAndUpdate({_id:newuser._id},{$set:req.body},function(err,data){
-                    res.json(data) ;
-                })
+				res.send(data);
+			})
+		}
+	});
+};
 
-        }
-    });
-}   ;
+exports.put = function (req, res) {
+	var user = req.app.db.model('user');
 
-exports.delete = function(req,res){
-    var user =  req.app.db.model('user');
-    user.remove({_id:req.params['userId']},function(err,data){
-        if(err) console.log(err) ;
-        res.json(data) ;
-    }) ;
+	var newuser = new user(req.body);
+	newuser.validate(function (error) {
+		if (error) {
+			res.json({ error: error });
+		} else {
+			delete req.body._id;
+			user.findByIdAndUpdate({_id: newuser._id}, {$set: req.body}, function (err, data) {
+				res.json(data);
+			})
 
-} ;
+		}
+	});
+};
+
+exports.delete = function (req, res) {
+	var user = req.app.db.model('user');
+
+	user.remove({_id: req.params['userId']}, function (err, data) {
+		if (err) console.log(err);
+		res.json(data);
+	});
+
+};
 

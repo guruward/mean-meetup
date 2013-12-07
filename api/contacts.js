@@ -1,86 +1,80 @@
-/**
- * Created by stephenward on 11/14/13.
- */
+exports.list = function (req, res) {
+	var contact = req.app.db.model('contact');
 
-exports.list = function(req, res){
-
-    var contact = req.app.db.model('contact') ;
-
-    var query = contact.find() ;
-    query.sort({lastName:'asc'}) ;
-    query.exec(function(err,data){
-        if(err){
-            console.log(err);
-            res.send(500) ;
-        }
-        res.json(data) ;
-    })
+	var query = contact.find();
+	query.sort({lastName: 'asc'});
+	query.exec(function (err, data) {
+		if (err) {
+			console.log(err);
+			res.send(500);
+		}
+		res.json(data);
+	})
 
 
 };
 
 
-exports.get = function(req, res){
+exports.get = function (req, res) {
+	var contact = req.app.db.model('contact');
 
-    var contact = req.app.db.model('contact') ;
-
-
-    try{
-        var id = req.params['contactId'] ;
-        contact.findOne({_id: id}, function(err,data){
-            console.log('find by id') ;
-            res.json(data) ;
-        });
-    }
-    catch(e){
-        console.log(e);
-        res.send(e) ;
-    }
+	try {
+		var id = req.params['contactId'];
+		contact.findOne({_id: id}, function (err, data) {
+			console.log('find by id');
+			res.json(data);
+		});
+	}
+	catch (e) {
+		console.log(e);
+		res.send(e);
+	}
 
 
 };
 
 
-exports.post = function(req,res){
-    var contact =  req.app.db.model('contact');
-    // console.log(req.body) ;
-    var newcontact = new contact(req.body);
-    newcontact.validate(function(error) {
-        if (error) {
-            res.json({ error : error });
-        } else {
+exports.post = function (req, res) {
+	var contact = req.app.db.model('contact');
 
-            newcontact.save(function(err,data){
+	var newcontact = new contact(req.body);
+	newcontact.validate(function (error) {
+		if (error) {
+			res.json({ error: error });
+		} else {
 
-                res.send(data) ;
-            })
-        }
-    });
-}   ;
+			newcontact.save(function (err, data) {
 
-exports.put = function(req,res){
-    var contact =  req.app.db.model('contact');
-    // console.log(req.body) ;
-    var newcontact = new contact(req.body);
-    newcontact.validate(function(error) {
-        if (error) {
-            res.json({ error : error });
-        } else {
-            delete req.body._id ;
-            contact.findByIdAndUpdate({_id:newcontact._id},{$set:req.body},function(err,data){
-                res.json(data) ;
-            })
+				res.send(data);
+			})
+		}
+	});
+};
 
-        }
-    });
-}   ;
+exports.put = function (req, res) {
+	var contact = req.app.db.model('contact');
 
-exports.delete = function(req,res){
-    var contact =  req.app.db.model('contact');
-    contact.remove({_id:req.params['contactId']},function(err,data){
-        if(err) console.log(err) ;
-        res.json(data) ;
-    }) ;
+	var newcontact = new contact(req.body);
+	newcontact.validate(function (error) {
+		if (error) {
+			res.json({ error: error });
+		} else {
+			delete req.body._id;
+			contact.findByIdAndUpdate({_id: newcontact._id}, {$set: req.body}, function (err, data) {
+				res.json(data);
+			})
 
-} ;
+		}
+	});
+};
+
+exports.delete = function (req, res) {
+	var contact = req.app.db.model('contact');
+
+	contact.remove({_id: req.params['contactId']}, function (err, data) {
+		if (err) console.log(err);
+		res.json(data);
+	});
+
+};
 
