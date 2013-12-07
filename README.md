@@ -10,7 +10,6 @@ and the repository is here @ https://github.com/guruward/mean-meetup
 
 ## How to install
     npm install
-    bower install
 
 ## How to view the site
 
