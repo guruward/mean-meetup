@@ -59,7 +59,32 @@ function contactCtrl($scope, sContact) {
         $scope.contacts = response;
     });
 
-    if (!$scope.contacts)$scope.contacts = [
-        {firstName: 'the', lastName: 'dude', phones: [], emails: []}
-    ];
+
+    $scope.save = function (contact,form) {
+        var promise;
+        if (contact._id) {
+            promise = sContact.putContact(contact);
+        }
+        else {
+            promise = sContact.postContact(contact);
+        }
+
+        promise.then(function (response) {
+            /* Clear all errors in the form */
+            for (var key in form) {
+                if (form[key].$error) {
+                    form[key].$error.mongoose = null;
+                }
+            }
+            if (response.error) {
+                // We got some errors, put them into angular
+                for (key in response.error.errors) {
+                    form[key].$error.mongoose = response.error.errors[key].type;
+                }
+            } else if (response) {
+                //  handle response
+                contact = response;
+            }
+        });
+    };
 }

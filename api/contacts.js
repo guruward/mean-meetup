@@ -11,7 +11,7 @@ exports.list = function (req, res) {
             res.send(500);
         }
         res.json(data);
-    })
+    });
 };
 
 
@@ -71,4 +71,29 @@ exports.delete = function (req, res) {
         res.json(data);
     });
 
+};
+
+
+exports.syncToElasticSearch = function(req, res){
+    var contact = req.app.db.model('contact');
+    var data = {
+        type: 'success',
+        message: 'Starting the sync process for contacts'
+    };
+
+    console.log('attempting to sync');
+
+    contact.sync(function(err, numSynced){
+        console.log('in callback!');
+        var data = {};
+        if(err){
+            data.type = 'error',
+            data.message = err;
+        } else {
+            data.type = 'success',
+            data.message = 'synced ' + numSynced + ' contacts';
+        }
+        console.log(data);
+    });
+    res.json(data);
 };

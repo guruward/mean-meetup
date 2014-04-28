@@ -11,7 +11,7 @@ exports.list = function (req, res) {
             res.send(500);
         }
         res.json(data);
-    })
+    });
 };
 
 

@@ -1,21 +1,17 @@
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var mongoose = require('mongoose');
+'use strict';
+
+var express = require('express'),
+    http = require('http'),
+    path = require('path'),
+    mongoose = require('mongoose'),
+    elmongo = require('elmongo');
 
 var app = express();
+app.db = mongoose.createConnection('mongodb://127.0.0.1/myapp');
 
-app.db = mongoose.createConnection('mongodb://localhost/myapp');
-app.db.on('error', function () {
-    console.error.bind(console, 'mongoose connection error: ');
-});
-app.db.once('open', function () {
-    console.log('mongoose open for business');
-});
 
 // config data models
-require('./models')(app, mongoose);
-
+require('./models')(app, mongoose, elmongo);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -36,4 +32,11 @@ require('./routes')(app, mongoose); // this will be my file containing all the r
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
+});
+
+app.db.on('error', function () {
+    console.error.bind(console, 'mongoose connection error: ');
+});
+app.db.once('open', function () {
+    console.log('mongoose open for business');
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports =function(app,mongoose){
+module.exports =function(app, mongoose, elmongo){
     var userSchema = new mongoose.Schema({
         firstName:{type:String},
         lastName:{type:String},

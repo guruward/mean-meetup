@@ -1,8 +1,19 @@
 body {
-  padding: 50px;
+  padding-top: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.contact {
+    border: 1px solid #aaa;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+}
+
+.contact.new {
+    background: #ccc;
 }

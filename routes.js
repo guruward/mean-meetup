@@ -14,16 +14,19 @@ module.exports = function (app) {
     app.delete('/api/users/:userId', require('./api/users').delete);
 
     // Communications
-    app.get('/api/communication/', require('./api/communications').list);
+    app.get('/api/communication', require('./api/communications').list);
     app.get('/api/communication/:commId', require('./api/communications').get);
     app.post('/api/communication', require('./api/communications').post);
     app.put('/api/communication', require('./api/communications').post);
     app.delete('/api/communication/:commId', require('./api/communications').delete);
 
     // contacts
-    app.get('/api/contact/', require('./api/contacts').list);
+    app.get('/api/contact', require('./api/contacts').list);
     app.get('/api/contact/:commId', require('./api/contacts').get);
-    app.post('/contact/', require('./api/contacts').post);
-    app.put('/contact/', require('./api/contacts').put);
-    app.delete('/contact/:contactId', require('./api/contacts').delete);
+    app.post('/api/contact/', require('./api/contacts').post);
+    app.put('/api/contact/', require('./api/contacts').put);
+    app.delete('/api/contact/:contactId', require('./api/contacts').delete);
+
+    /* rebuild elastic search on a given collection */
+    app.get('/api/sync/contact', require('./api/contacts').syncToElasticSearch);
 };

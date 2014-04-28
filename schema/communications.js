@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (app, mongoose) {
+module.exports = function (app, mongoose, elmongo) {
     var communicationSchema = new mongoose.Schema({
         commType: {type: String},
         date: {type: Date},

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (app, mongoose) {
+module.exports = function (app, mongoose, elmongo) {
     var documentSchema = new mongoose.Schema({
         docOwner: [
             {

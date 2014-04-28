@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (app, mongoose) {
+module.exports = function (app, mongoose, elmongo) {
     var contactSchema = new mongoose.Schema({
         contactType: {type: String},
         firstName: {type: String},
@@ -25,6 +25,7 @@ module.exports = function (app, mongoose) {
             }
         ]
     });
+    contactSchema.plugin(elmongo);
 
     app.db.model('contact', contactSchema);
 };

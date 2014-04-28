@@ -11,7 +11,7 @@ exports.list = function (req, res) {
             res.send(500);
         }
         res.json(data);
-    })
+    });
 };
 
 
@@ -39,7 +39,7 @@ exports.post = function (req, res) {
     newComm.save(function (err, data) {
         if (err) console.log(err);
         res.json(data);
-    })
+    });
 
 };
 
