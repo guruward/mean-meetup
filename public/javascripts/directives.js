@@ -1,19 +1,18 @@
-/**
- * Created by stephen on 11/13/13.
- */
+'use strict';
+/* global myapp */
 
 myapp.directive('user', function () {
-	return {
-		restrict: "E",
-		templateUrl: "/templates/user.html",
-		controller: 'userCtrl'
-	}
-})
+    return {
+        restrict: "E",
+        templateUrl: "/templates/user.html",
+        controller: 'userCtrl'
+    }
+});
 
 myapp.directive('contacts', function () {
-	return {
-		restrict: "E",
-		templateUrl: "/templates/contacts.html",
-		controller: 'contactCtrl'
-	}
-})
+    return {
+        restrict: "E",
+        templateUrl: "/templates/contacts.html",
+        controller: 'contactCtrl'
+    }
+});
