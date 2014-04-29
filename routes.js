@@ -27,6 +27,15 @@ module.exports = function (app) {
     app.put('/api/contact/', require('./api/contacts').put);
     app.delete('/api/contact/:contactId', require('./api/contacts').delete);
 
-    /* rebuild elastic search on a given collection */
-    app.get('/api/sync/contact', require('./api/contacts').syncToElasticSearch);
+
+    // rebuild elastic search on a given collection
+    app.get('/api/sync/contact', require('./api/contacts').sync);
+
+
+    // Mongo / Mongoose Find
+    app.get('/api/find/contact', require('./api/contacts').find);
+
+
+    // Elasticsearch Search
+    app.get('/api/search/contact', require('./api/contacts').search);
 };

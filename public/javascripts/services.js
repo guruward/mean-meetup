@@ -99,32 +99,61 @@ myapp.service('sContact', function ($http, $q) {
 		});
 		return deferred.promise;
 	};
-	this.getContact = function (ContactId) {
+	this.getContact = function (contactId) {
 		var deferred = $q.defer();
 
-		$http({method: 'GET', url: '/api/contact/' + ContactId}).success(function (data) {
+		$http({method: 'GET', url: '/api/contact/' + contactId}).success(function (data) {
 			deferred.resolve(data);
 			return data;
 		});
 		return deferred.promise;
 	};
 
-	this.postContact = function (Contact) {
+	this.postContact = function (contact) {
 		var deferred = $q.defer();
 
-		$http({method: 'POST', url: '/api/contact/', data: Contact}).success(function (data) {
+		$http({method: 'POST', url: '/api/contact/', data: contact}).success(function (data) {
 			deferred.resolve(data);
 			return data;
 		});
 		return deferred.promise;
 	};
 
-	this.deleteContact = function (ContactId) {
+    this.putContact = function (contact) {
+        var deferred = $q.defer();
+
+        $http({method: 'PUT', url: '/api/contact/', data: contact}).success(function (data) {
+            deferred.resolve(data);
+            return data;
+        });
+        return deferred.promise;
+    };
+
+	this.deleteContact = function (contactId) {
 		var deferred = $q.defer();
-		$http({method: 'DELETE', url: '/api/contact/' + ContactId}).success(function (data) {
+		$http({method: 'DELETE', url: '/api/contact/' + contactId}).success(function (data) {
 			deferred.resolve(data);
 			return data;
 		});
 		return deferred.promise;
 	};
+
+
+    this.find = function (query) {
+        var deferred = $q.defer();
+        $http({method: 'GET', url: '/api/find/contact', params: {query:query}}).success(function (data) {
+            deferred.resolve(data);
+            return data;
+        });
+        return deferred.promise;
+    };
+
+    this.search = function (query) {
+        var deferred = $q.defer();
+        $http({method: 'GET', url: '/api/search/contact', params: {query:query}}).success(function (data) {
+            deferred.resolve(data);
+            return data;
+        });
+        return deferred.promise;
+    };
 });

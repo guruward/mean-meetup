@@ -74,17 +74,9 @@ exports.delete = function (req, res) {
 };
 
 
-exports.syncToElasticSearch = function(req, res){
+exports.sync = function(req, res){
     var contact = req.app.db.model('contact');
-    var data = {
-        type: 'success',
-        message: 'Starting the sync process for contacts'
-    };
-
-    console.log('attempting to sync');
-
     contact.sync(function(err, numSynced){
-        console.log('in callback!');
         var data = {};
         if(err){
             data.type = 'error',
@@ -94,6 +86,26 @@ exports.syncToElasticSearch = function(req, res){
             data.message = 'synced ' + numSynced + ' contacts';
         }
         console.log(data);
+        res.json(data);
     });
-    res.json(data);
+};
+
+exports.search = function (req, res) {
+    var contact = req.app.db.model('contact');
+    var search = JSON.parse(req.param('query'));
+
+    console.log(search);
+    contact.search(search,function(err,results){
+        res.json((err) ? err : results);
+    });
+};
+
+exports.find = function(req, res){
+    var contact = req.app.db.model('contact');
+    var search = JSON.parse(req.param('query'));
+
+    console.log(search);
+    contact.find(search,function(err,results){
+        res.json((err) ? err : results);
+    });
 };

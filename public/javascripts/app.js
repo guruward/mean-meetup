@@ -10,6 +10,7 @@ var myapp = angular.module('MEAN', ['ngRoute']).
             when('/', {templateUrl: '/partials/home.html'}).
             when('/user/', {templateUrl: '/partials/user.html', controller: userCtrl}). // userCtrl is defined below
             when('/contacts/', {templateUrl: '/partials/contacts.html', controller: contactCtrl}). // contactCtrl is defined below
+            when('/search/', {templateUrl: '/partials/search.html', controller: searchCtrl}). // contactCtrl is defined below
             otherwise({redirectTo: '/'});
     }]);
 
@@ -62,7 +63,7 @@ function contactCtrl($scope, sContact) {
     });
 
 
-    $scope.save = function (contact,form) {
+    $scope.save = function (contact, form) {
         var promise;
         if (contact._id) {
             promise = sContact.putContact(contact);
@@ -81,6 +82,55 @@ function contactCtrl($scope, sContact) {
             } else {
                 $scope.contacts[$scope.contacts.indexOf(contact)] = data;
             }
+        });
+    };
+}
+
+function searchCtrl($scope, sContact) {
+    $scope.mongo = {
+        query: {},
+        results: null
+    };
+
+
+    $scope.es = {
+        query: {},
+        results: null
+    };
+
+    $scope.updateMongoQuery = function () {
+        $scope.mongo.query = {};
+        if ($scope.mongo.field) {
+            $scope.mongo.query[$scope.mongo.field] = (typeof $scope.mongo.value !== 'undefined') ? $scope.mongo.value : null;
+        }
+    };
+
+    $scope.updateEsQuery = function () {
+        $scope.es.query = {};
+        if ($scope.es.value) {
+            $scope.es.query.query = $scope.es.value;
+            if($scope.es.fuzzy > 0 &&!isNaN($scope.es.fuzzy)){
+                $scope.es.query.fuzziness = $scope.es.fuzzy;
+            }
+        }
+    };
+
+
+    $scope.mongo.field = 'firstName';
+    $scope.mongo.value = 'Kalarrs';
+    $scope.updateMongoQuery();
+
+    $scope.mongoSearch = function () {
+        $scope.mongo.results = null;
+        sContact.find($scope.mongo.query).then(function (data) {
+            $scope.mongo.results = data;
+        });
+    };
+
+    $scope.esSearch = function () {
+        $scope.es.results = null;
+        sContact.search($scope.es.query).then(function (data) {
+            $scope.es.results = data;
         });
     };
 }
