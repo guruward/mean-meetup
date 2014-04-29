@@ -1,12 +1,11 @@
 <div class="content">
     <div class="container">
         <h1>Contacts</h1>
-
         <div ng-if="!contacts.length" class="alert alert-danger">
             You don't have any Contacts :(
         </div>
         <div ng-if="contacts.length">
-            <div ng-repeat="contact in contacts" ng-class="{new:!contact.id}" class="contact">
+            <div ng-repeat="contact in contacts | orderBy:'_id' track by $index" ng-class="{new:!contact._id}" class="contact">
 
                 <form role="form" class="form-horizontal" ng-submit="save(contact,contactForm)" name="contactForm">
                     <div class="form-group">
@@ -130,7 +129,7 @@
         </div>
         <hr>
         <div class="btn-toolbar text-right">
-            <button class="btn btn-warning" ng-click="contacts.push(newContact)">Add Contact</button>
+            <button class="btn btn-warning" ng-click="addContact()">Add Contact</button>
         </div>
     </div>
 </div>

@@ -52,7 +52,9 @@ function userCtrl($scope, sUser) {
 }
 
 function contactCtrl($scope, sContact) {
-    $scope.newContact = {phones: [], emails: []};
+    $scope.addContact = function () {
+        $scope.contacts.push({phones: [], emails: []});
+    };
 
     var promise = sContact.getContacts();
     promise.then(function (response) {
@@ -69,21 +71,15 @@ function contactCtrl($scope, sContact) {
             promise = sContact.postContact(contact);
         }
 
-        promise.then(function (response) {
-            /* Clear all errors in the form */
-            for (var key in form) {
-                if (form[key].$error) {
-                    form[key].$error.mongoose = null;
-                }
-            }
-            if (response.error) {
+        promise.then(function (data) {
+            form.$setPristine();
+            if (data.error) {
                 // We got some errors, put them into angular
-                for (key in response.error.errors) {
+                for (key in data.error.errors) {
                     form[key].$error.mongoose = response.error.errors[key].type;
                 }
-            } else if (response) {
-                //  handle response
-                contact = response;
+            } else {
+                $scope.contacts[$scope.contacts.indexOf(contact)] = data;
             }
         });
     };
