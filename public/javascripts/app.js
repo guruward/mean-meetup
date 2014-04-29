@@ -115,11 +115,6 @@ function searchCtrl($scope, sContact) {
         }
     };
 
-
-    $scope.mongo.field = 'firstName';
-    $scope.mongo.value = 'Kalarrs';
-    $scope.updateMongoQuery();
-
     $scope.mongoSearch = function () {
         $scope.mongo.results = null;
         sContact.find($scope.mongo.query).then(function (data) {
