@@ -1,6 +1,9 @@
 'use strict'
 
-var myapp = angular.module('MEAN', ['ngRoute']).
+var myapp = angular.module('MEAN', [
+        'ngRoute',
+        'btford.socket-io'
+    ]).
     config(['$routeProvider', function ($routeProvider) {
 
         // These are the routes for our angular SPA
@@ -86,7 +89,7 @@ function contactCtrl($scope, sContact) {
     };
 }
 
-function searchCtrl($scope, sContact) {
+function searchCtrl($scope, sContact, socket) {
     $scope.mongo = {
         query: {},
         results: null
@@ -96,6 +99,11 @@ function searchCtrl($scope, sContact) {
     $scope.es = {
         query: {},
         results: null
+    };
+
+    $scope.esTypeAhead = {
+        results: null,
+        fields: ['firstName']
     };
 
     $scope.updateMongoQuery = function () {
@@ -109,7 +117,7 @@ function searchCtrl($scope, sContact) {
         $scope.es.query = {};
         if ($scope.es.value) {
             $scope.es.query.query = $scope.es.value;
-            if($scope.es.fuzzy > 0 &&!isNaN($scope.es.fuzzy)){
+            if ($scope.es.fuzzy > 0 && !isNaN($scope.es.fuzzy)) {
                 $scope.es.query.fuzziness = $scope.es.fuzzy;
             }
         }
@@ -127,5 +135,29 @@ function searchCtrl($scope, sContact) {
         sContact.search($scope.es.query).then(function (data) {
             $scope.es.results = data;
         });
+    };
+
+    $scope.toggleTypeAheadFields = function (field) {
+        var index = $scope.esTypeAhead.fields.indexOf(field);
+        if (index > -1) {
+            $scope.esTypeAhead.fields.splice(index, 1);
+        } else {
+            $scope.esTypeAhead.fields.push(field);
+        }
+    };
+
+    $scope.performTypeahead = function () {
+        if ($scope.esTypeAhead.fields.length) {
+            socket.emit('change:typeahead', {
+                query: $scope.esTypeAhead.value,
+                fields: $scope.esTypeAhead.fields
+            }, function (result) {
+                if (result) {
+                    $scope.esTypeAhead.results = result;
+                }
+            });
+        } else {
+            alert('Please select at least 1 field to search on!');
+        }
     };
 }

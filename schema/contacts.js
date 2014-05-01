@@ -3,8 +3,8 @@
 module.exports = function (app, mongoose, elmongo) {
     var contactSchema = new mongoose.Schema({
         contactType: {type: String},
-        firstName: {type: String},
-        lastName: {type: String},
+        firstName: {type: String, autocomplete: true},
+        lastName: {type: String, autocomplete: true},
         phones: [
             {
                 phnType: {type: String},

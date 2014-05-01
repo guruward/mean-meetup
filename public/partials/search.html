@@ -2,7 +2,7 @@
     <h1>Search</h1>
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <form role="form" name="mongoForm" ng-submit="mongoSearch()">
                 <h2>Mongo</h2>
 
@@ -41,7 +41,7 @@
                 </table>
             </form>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <form role="form" name="esForm" ng-submit="esSearch()">
                 <h2>elasticsearch</h2>
 
@@ -77,6 +77,41 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="contact in es.results.hits track by $index">
+                        <td>{{contact._source.firstName}}</td>
+                        <td>{{contact._source.lastName}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="col-sm-4">
+            <form role="form" name="esForm">
+                <h2>elasticsearch typeahead w/ sockets</h2>
+
+                <div class="form-group">
+                    <label for="esValue">Who are you looking for?</label>
+                    <input type="text" class="form-control" id="esValue" placeholder="First Name"
+                           ng-model="esTypeAhead.value" ng-change="performTypeahead()">
+                </div>
+                <div class="checkbox" ng-repeat="field in ['firstName','lastName']">
+                    <label>
+                        <input type="checkbox" name="fields[]" value="{{field}}"
+                               ng-checked="esTypeAhead.fields.indexOf(field) > -1"
+                               ng-click="toggleTypeAheadFields(field)"
+                                > {{field}}
+                    </label>
+                </div>
+                <hr>
+                <h3>Search Results - ({{esTypeAhead.results.total}})</h3>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="contact in esTypeAhead.results.hits track by $index">
                         <td>{{contact._source.firstName}}</td>
                         <td>{{contact._source.lastName}}</td>
                     </tr>

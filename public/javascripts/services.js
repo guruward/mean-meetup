@@ -1,6 +1,10 @@
 'use strict';
 /* global myapp */
 
+myapp.factory('socket', function (socketFactory) {
+    return socketFactory();
+});
+
 // This file is mainly talking to our REST api
 myapp.service('sUser', function ($http, $q) {
 	this.getUsers = function () {

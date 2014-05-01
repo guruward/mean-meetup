@@ -6,9 +6,29 @@ var express = require('express'),
     mongoose = require('mongoose'),
     elmongo = require('elmongo');
 
-var app = express();
+var app = express(),
+    server = http.Server(app),
+    io = require('socket.io').listen(server);
+
 app.db = mongoose.createConnection('mongodb://127.0.0.1/myapp');
 
+io.sockets.on('connection', function (socket) {
+    console.log('A user has connected');
+
+    var contact = app.db.model('contact');
+
+    socket.on('change:typeahead', function (data, fn) {
+        if (data.fields && data.fields.length && typeof data.query === 'string') {
+            contact.search(
+                {query: data.query, fields: data.fields},
+                function (err, searchResults) {
+                    if(!err){
+                        fn(searchResults);
+                    }
+                });
+        }
+    });
+});
 
 // config data models
 require('./models')(app, mongoose, elmongo);
@@ -30,7 +50,7 @@ if ('development' == app.get('env')) {
 }
 require('./routes')(app, mongoose); // this will be my file containing all the route definitions
 
-http.createServer(app).listen(app.get('port'), function () {
+server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 
